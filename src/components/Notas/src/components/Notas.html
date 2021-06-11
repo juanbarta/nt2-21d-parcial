@@ -75,19 +75,16 @@
     <div class="table-responsive">
       <table class="table">
           <tr class="bg-dark text-white">
-              <th>Nombre</th>
-              <th>Apellido</th>
+              <th>Nombre y Apellido</th>
               <th>Nota</th>
           </tr>
           <tr class="bg-info text-black" v-for="(alumno,index) in alumnos" :key="index">
-              <td>{{ alumno.nombre }}</td>
-              <td>{{ alumno.apellido }}</td>
+              <td>{{ alumno.nombre }}  {{alumno.apellido}}</td>
               <td :style= "getColor(alumno.nota)">{{ alumno.nota}}</td>
 
           </tr>
           <tr v-show="alumnos.length > 0" class="bg-dark text-white" x>
             <th :style= "getColor(calcularPromedio)">Promedio</th>
-            <th></th>
             <th :style= "getColor(calcularPromedio)" >{{calcularPromedio}}</th>
         </tr>
       </table>
