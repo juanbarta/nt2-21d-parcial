@@ -1,0 +1,99 @@
+
+<section class="src-components-notas">
+  <div class="jumbotron">
+    <h2>Notas</h2>
+    <br>
+    <br>
+
+    <vue-form :state="formState" @submit.prevent="enviar()">
+
+    <validate tag="div">
+      <label for="nombre">Nombre</label>
+      <input type="text"
+        id="nombre"
+        name="nombre"
+        class="form-control"
+        autocomplete="off"
+        required
+        :minlength="nombreApellidoMinLength"
+        :maxlength="nombreApellidoMaxLength"
+        sin-espacios
+        v-model.trim="formData.nombre">
+      <field-messages name="nombre" show="$dirty">
+        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+        <div slot="minlength" class="alert alert-danger mt-1">Este campo requiere como mínimo {{nombreApellidoMinLength}} caractéres</div>
+        <div v-if="formData.nombre.length == nombreApellidoMaxLength" class="alert alert-danger mt-1">Este campo permite como máximo {{nombreApellidoMaxLength}} caractéres</div>
+        <div slot="sin-espacios" class="alert alert-danger mt-1">No se permiten espacios intermedios en este campo</div>  
+      </field-messages>
+    </validate>
+
+    <validate tag="div">
+      <label for="apellido">Apellido</label>
+      <input type="text"
+      id="apellido"
+      name="apellido"
+      class="form-control"
+      autocomplete="off"
+      required
+      :minlength="nombreApellidoMinLength"
+      :maxlength="nombreApellidoMaxLength"
+      sin-espacios
+      v-model.trim="formData.apellido">
+      <field-messages name="apellido" show="$dirty">
+        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+        <div slot="minlength" class="alert alert-danger mt-1">Este campo requiere como mínimo {{nombreApellidoMinLength}} caractéres</div>
+        <div v-if="formData.apellido.length == nombreApellidoMaxLength" class="alert alert-danger mt-1">Este campo permite como máximo {{nombreApellidoMaxLength}} caractéres</div>
+        <div slot="sin-espacios" class="alert alert-danger mt-1">No se permiten espacios intermedios en este campo</div>  
+      </field-messages>
+    </validate>
+
+    <validate tag="div">
+      <label for="nota">Nota</label>
+      <input v-model.number="formData.nota"
+      type="number"
+      id="nota"
+      name="nota"
+      class="form-control"
+      autocomplete="off"
+      required
+      :min="notaMin"
+      :max="notaMax"
+      v-model.trim="formData.nota">
+      <field-messages name="nota" show="$dirty">
+        <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+        <div slot="min" class="alert alert-danger mt-1">La nota mínima permitida es {{notaMin}}</div>
+        <div slot="max" class="alert alert-danger mt-1">La nota máxima permitida es {{notaMax}}</div>
+      </field-messages>
+    </validate>
+
+    <button class="btn btn-success my-3" type="submit" :disabled="formState.$invalid">Enviar</button>
+    </vue-form>
+
+    
+    
+    
+    <div class="table-responsive">
+      <table class="table">
+          <tr class="bg-dark text-white">
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Nota</th>
+          </tr>
+          <tr class="bg-info text-black" v-for="(alumno,index) in alumnos" :key="index">
+              <td>{{ alumno.nombre }}</td>
+              <td>{{ alumno.apellido }}</td>
+              <td :style= "getColor(alumno.nota)">{{ alumno.nota}}</td>
+
+          </tr>
+          <tr v-show="alumnos.length > 0" class="bg-dark text-white" x>
+            <th :style= "getColor(calcularPromedio)">Promedio</th>
+            <th></th>
+            <th :style= "getColor(calcularPromedio)" >{{calcularPromedio}}</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+</section>
+
